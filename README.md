@@ -10,16 +10,19 @@ https://ibb.co/k84V16
 https://ibb.co/jUekZR
 
 ## Initial thoughts on game structure  (Write out what challenges you expect to encounter, or ideas you want to come up with)
-I’m thinking of having two layers.  The bottom layer is the squares with all the numbers and bombs while the top layer is all the buttons.  Of course, the top’s behavior is all dependent on the bottom layer.  I will write a class for each square and have a list of the squares saved in a double array in the board.  I have to use random to be able to generate a new board everytime the games starts or restarts.  I imagine the challenges will include being able to organize all the information needed.
+
+There will be the initial board and when the buttons are clicked the numbers will appear.  I initially was thinking of doing two layers, but I think just saving the numbers within values in the js instead will make it easier.  There will be a class for the square and board itself.  The board will contain the squares.  A challenge will probably be creating the board with the numbers preset with random.
 
 ## Phases of Completion  (The steps or phases you expect to go through, and the tasks that you'll need to accomplish to reach each step. These should resemble the acceptance criteria we were working through earlier.)  
 Drawing out the board
 
 writing out classes and functions
 
+creating the imaginary board with the numbers and bombs randomly
+
 writing all the eventhandlers (for the many kinds of buttons)
 
-the algorithms or clearing buttons that are 0, and calculating how many bombs around each square
+the algorithms for clearing buttons that are 0, and calculating how many bombs around each square
 
 
 ## Links and Resources  (Anything you've looked up so far or are thinking about using.)
