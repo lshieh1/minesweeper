@@ -1,0 +1,33 @@
+body {
+	text-align: center;
+	margin: auto;
+}
+
+h1 {
+	font-family: 'Acme', sans-serif;
+}
+
+img {
+	width: 20px;
+	height: 20px;
+}
+
+.section {
+	text-align: center;
+}
+
+.grid-container {
+	display: grid;
+	padding: 0 auto;
+	grid-gap: 1px;
+	position: relative;
+}
+
+.square {
+	background: green;
+	position: relative;
+	border: 2px solid;
+	font-size: 12px;
+	font-family: 'Acme', sans-serif;
+	cursor: default;
+}
