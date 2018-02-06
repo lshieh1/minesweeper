@@ -7,9 +7,13 @@ h1 {
 }
 
 input {
-	font-size: 25px;
+	font-size: 20px;
 	border-style: solid;
 	width: 200px;
 	height: 50px;
-	margin-top: 200px;
+	margin-top: 50px;
+}
+
+#selection {
+	display: block;
 }

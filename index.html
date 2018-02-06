@@ -1,14 +1,20 @@
 <!DOCTYPE html>
 
-<html>
+<html class='index'>
 	<head>
 		<link rel="stylesheet" href="style.css" >
 		<title>Minesweeper</title>
 	</head>
 	<body>
-		<h1>Minesweeper</h1>		
-		<form action="./play.html">
-    	<input type="submit" value="Start Game" />
-</form>
+		<h1>Minesweeper</h1>
+		<h2>Choose a level:</h2>
+		<div id="selection">
+			<input type='button' id='beginner' value="Beginner" onClick="window.location.href='./play.html'">
+			<input type='button' id='intermediate' value="Intermediate" onClick="window.location.href='./play.html'">
+			<input type='button' id='expert' value="Expert" onClick="window.location.href='./play.html'">
+			<input type='button' id='custom' value="Custom" onClick="window.location.href='./play.html'">
+		</div>	
+		<script src="app.js" charset="utf-8"></script>
+	
 	</body>
 </html>

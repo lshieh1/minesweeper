@@ -9,14 +9,52 @@ class Board {
 		this.height = height
 		this.numBombs=numBombs
 		this.squares = []
+		this.bombCounter=numBombs
+	}
+
+	addBombCounter() {
+		this.bombCounter++
+	}
+
+	subBombCounter() {
+		this.bombCounter--
+	}
+
+	getBombCounter() {
+		return this.bombCounter
+	}
+
+	getWidth() {
+		return this.width
+	}
+
+	getHeight() {
+		return this.height
 	}
 
 	makeBoard() {
 		this.createSquares()
-		this.makeColumns()
+		this.makeColumnsRows()
+		this.initializeCounter()
 		this.randomGenerator()
 		this.countBombsAroundSquares()
+		//this.eventHandlers()
 	}
+
+	initializeCounter() {
+		document.querySelector('.counter').innerHTML = this.numBombs
+	}
+
+
+	getSquare(id) {
+		let arr = id.split('_')
+		return this.squares[arr[0]][arr[1]]
+	}
+
+	getSquares() {
+		return this.squares
+	}
+
 	//generate random number with width and 
 	randomGenerator() {
 		for(let i=0;i<this.numBombs;i++) {
@@ -46,23 +84,13 @@ class Board {
 		}
 	}
 
-	makeColumns() {
-		let autoStr = ''
-		for(let i=0;i<this.height;i++) {
-			autoStr+='20px '
-		}
-		document.querySelector('.grid-container').setAttribute('style','grid-template-columns: '+autoStr)
+	makeColumnsRows() {
+		document.querySelector('.grid-container').setAttribute('style',`grid-template-columns: repeat(${this.height},20px);
+			grid-template-rows: repeat(${this.width},20px);`)
 	}
 
-	// makeRows() {
-	// 	let autoStr = ''
-	// 	for(let i=0;i<this.width;i++) {
-	// 		autoStr+='auto '
-	// 	}
-	// 	document.querySelector('.grid-container').setAttribute('style','grid-template-rows: '+autoStr)
-	// }
-
 	createSquares() {
+		//console.log('herro')
 		for(let i=0;i<=this.width+1;i++) {
 			this.squares.push([])
 			for(let j=0;j<=this.height+1;j++) {
@@ -73,15 +101,6 @@ class Board {
 				}
 			}
 		}
-	}
-
-	getSquare(id) {
-		let arr = id.split('_')
-		return this.squares[arr[0]][arr[1]]
-	}
-
-	getSquares() {
-		return this.squares
 	}
 }
 
@@ -101,6 +120,7 @@ class Square {
 		square.className = 'square'
 		square.id = `${this.x}_${this.y}`
 		square.innerHTML = "&nbsp;"
+		square.setAttribute('style',`grid-row: ${this.x}; grid-column: ${this.y}`)
 		document.querySelector('.grid-container').appendChild(square)
 	}
 
@@ -150,82 +170,71 @@ let intermediateBoard = new Board(16,16,40)
 let board = new Board(16,30,99)
 board.makeBoard()
 
+// let board
+
 
 function revealNumber(square) {
-	switch(board.getSquare(square.id).getBombsAround()) {
-		case 1:
-			square.setAttribute('style','background: white; color: blue')
-			square.innerHTML = 1
-			board.getSquare(square.id).setClicked()
-			break
-		case 2:
-			square.setAttribute('style','background: white; color: green')
-			square.innerHTML = 2
-			board.getSquare(square.id).setClicked()
-			break
-		case 3:
-			square.setAttribute('style','background: white; color: red')
-			square.innerHTML = 3
-			board.getSquare(square.id).setClicked()
-			break
-		case 4:
-			square.setAttribute('style','background: white; color: purple')
-			square.innerHTML = 4
-			board.getSquare(square.id).setClicked()
-
-			break
-		case 5:
-			square.setAttribute('style','background: white; color: maroon')
-			square.innerHTML = 5
-			board.getSquare(square.id).setClicked()
-			break
-		case 6:
-			square.setAttribute('style','background: white; color: turquoise')
-			square.innerHTML = 6
-			board.getSquare(square.id).setClicked()
-			break
-		case 7:
-			square.setAttribute('style','background: white; color: black')
-			square.innerHTML = 7
-			board.getSquare(square.id).setClicked()
-			break
-		case 8:
-			square.setAttribute('style','background: white; color: gray')
-			square.innerHTML = 8
-			board.getSquare(square.id).setClicked()
-			break
-		case 0:
-			square.setAttribute('style','background: white;')
-			revealZeros(square)
-			// let squ = board.getSquare(square.id)
-			// squ.setClicked()
-			// for(let i=squ.getX()-1;i<=squ.getX()+1;i++) {
-			// 	for(let j=squ.getY()-1;j<=squ.getY()+1;j++) {
-			// 		//if(!)
-			// 		let sq = document.getElementById(`${i}_${j}`)
-			// 		if(board.getSquare(sq.id).getBombsAround() === 0) {
-			// 			sq.setAttribute('style','background: white;')
-			// 			revealNumber(sq)
-			// 		} else {
-			// 			revealNumber(sq)
-			// 		}
-			// 	}
-			// }
-			break
+	let val = board.getSquare(square.id).getBombsAround()
+	if(val === 1) {
+		square.setAttribute('style','background: white; color: blue')
+		square.innerHTML = 1
+		board.getSquare(square.id).setClicked()
+	} else if(val === 2) {
+		square.setAttribute('style','background: white; color: green')
+		square.innerHTML = 2
+		board.getSquare(square.id).setClicked()
+	} else if(val === 3) {
+		square.setAttribute('style','background: white; color: red')
+		square.innerHTML = 3
+		board.getSquare(square.id).setClicked()
+	} else if(val === 4) {
+		square.setAttribute('style','background: white; color: purple')
+		square.innerHTML = 4
+		board.getSquare(square.id).setClicked()
+	} else if(val === 5) {
+		square.setAttribute('style','background: white; color: maroon')
+		square.innerHTML = 5
+		board.getSquare(square.id).setClicked()
+	} else if(val === 6) {
+		square.setAttribute('style','background: white; color: turquoise')
+		square.innerHTML = 6
+		board.getSquare(square.id).setClicked()
+	} else if(val === 7) {
+		square.setAttribute('style','background: white; color: black')
+		square.innerHTML = 7
+		board.getSquare(square.id).setClicked()
+	} else if(val === 8) {
+		square.setAttribute('style','background: white; color: gray')
+		square.innerHTML = 8
+		board.getSquare(square.id).setClicked()
+	} else if(val === 0) {
+		square.setAttribute('style','background: white;')
+		//revealZeros(square)
+		let squ = board.getSquare(square.id)
+		squ.setClicked()
+		for(let i=squ.getX()-1;i<=squ.getX()+1;i++) {
+			for(let j=squ.getY()-1;j<=squ.getY()+1;j++) {
+				if(!(i===0 || j===0 || i===board.getWidth()+1 || j===board.getHeight()+1) && !(board.getSquare(`${i}_${j}`).isClicked())) {
+					let sq = document.getElementById(`${i}_${j}`)
+					if(board.getSquare(`${i}_${j}`).getBombsAround() === 0) {
+						revealNumber(sq)
+					} else {
+						revealNumber(sq)
+					}
+				}
+			}
+		}
 	}
-}
-
-function revealZeros(square) {
-
 }
 
 function showBombs() {
 	board.getSquares().forEach((el) => {
 		el.forEach((e) => {
 			e.setClicked()
-			if(e.isBomb()) {
+			if(e.isBomb() && !e.isFlagged()) {
 				let bomb = document.getElementById(`${e.getX()}_${e.getY()}`)
 				bomb.setAttribute('style','background: red')
+				//debugger
 			}
 		})
 	})
@@ -245,6 +254,7 @@ function squarePressed() {
 }
 
 function rightClicked(e) {
+	console.log('herro')
 	e.preventDefault();
 	if(!board.getSquare(this.id).isFlagged()) {
 		if(board.getSquare(this.id).isClicked()) {
@@ -252,24 +262,57 @@ function rightClicked(e) {
 		}
 		let flag = document.createElement('img')
 		flag.src = './images/flag.png'
-		flag.id = 'flag'
-		this.appendChild(flag)
+		flag.className = 'flag'
+		let parent = this.parentNode
+		parent.replaceChild(flag,this)
 		board.getSquare(this.id).setFlag(true)
+		board.subBombCounter()
+		document.querySelector('.counter').innerHTML = board.getBombCounter()
 	} else {
-		this.removeChild(this.querySelector('#flag'))
-		board.getSquare(this.id).setFlag(false)
+		let flag = document.querySelector('#flag')
+		e.preventDefault();
+		parent = flag.parentNode
+		parent.replaceChild(val,flag)
+		//this.removeChild(this.querySelector('#flag'))
+		board.getSquare(val.id).setFlag(false)
+		board.addBombCounter()
+		document.querySelector('.counter').innerHTML = board.getBombCounter()
 	}
 }
 
+// let board
+// document.querySelector('#beginner').addEventListener('click',function() {
+
+// })
+
+
+// document.querySelectorAll('input').forEach((el) => {
+// 	el.addEventListener('submit',function() {
+// 		console.log('herro')
+// 		if(el.value === 'Beginner') {
+// 			console.log('herro')
+// 			board = new Board(9,9,10)
+// 		} else if(el.value === 'Intermediate') {
+// 			board = new Board(16,16,40)
+// 		} else if(el.value === 'Expert') {
+// 			board = new Board(16,30,99)
+// 		} else {
+			
+// 		}
+// 		board.makeBoard()
+// 	})
+// })
+
 document.querySelectorAll('.square').forEach((el) => {
+	let val
+	//console.log('hello')
 	el.addEventListener('click',squarePressed)
 	el.addEventListener('contextmenu',rightClicked)
 })
-// let count =0
-// for(let i=0;i<=16+1;i++) {
+
+
 // 	console.log(board.squares[i][30].bomb)
 // 	for(let j=0;j<=30+1;j++) {
 // 			console.log(board.squares[1][j].bomb)
 // 	}
-// }
 
