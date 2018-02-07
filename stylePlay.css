@@ -1,4 +1,5 @@
 body {
+	background-image: url('http://cdn.wonderfulengineering.com/wp-content/uploads/2014/10/simple-wallpaper-1.jpg');
 	text-align: center;
 	margin: auto;
 }
@@ -8,42 +9,41 @@ h1 {
 }
 
 .flag {
-	border: 2px solid;
-	width: 16px;
-	height: 16px;
+	border: 1px solid;
+	width: 18px;
+	height: 18px;
 	position: relative;
-	right: 2px;
-	bottom: 2px;
-
+	right: 1px;
+	bottom: 1px;
 }
 
 .bomb {
 	background-color: white;
-	border: 2px solid;
-	width: 16px;
-	height: 16px;
+	border: 1px solid;
+	width: 18px;
+	height: 18px;
 }
 
 .x {
-	border: 2px solid;
-	width: 16px;
-	height: 16px;
+	border: 1px solid;
+	width: 18px;
+	height: 18px;
 	position: relative;
-	bottom: 26px;
-	right: 2px;
+	bottom: 25px;
+	right: 1px;
 }
 
 .flagged {
 	position: relative;
-	bottom: 2px;
-	right: 2px;
+	bottom: 1px;
+	right: 1px;
 }
 
 .red {
 	background-color: red;
 	position: relative;
-	bottom: 18px;
-	right: 2px;
+	bottom: 17px;
+	right: 1px;
 }
 
 .section {
@@ -60,7 +60,7 @@ h1 {
 
 .square {
 	background: #264d73;
-	border: 2px solid;
+	border: 1px solid;
 	font-size: 12px;
 	font-family: 'Acme', sans-serif;
 	cursor: default;
@@ -69,4 +69,15 @@ h1 {
 .counter {
 	font-family: 'Acme', sans-serif;
 	font-size: 25px;
+	position: relative;
+	top: 20px;
+}
+
+.face {
+	width: 50px;
+	height: 50px;
+}
+
+#info {
+	
 }

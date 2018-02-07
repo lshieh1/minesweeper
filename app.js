@@ -1,181 +1,42 @@
-
-
-/*BOARD CLASS*/
-class Board {
-	constructor(width,height,numBombs) {
-		this.width = width
-		this.height = height
-		this.numBombs=numBombs
-		this.squares = []
-		this.bombCounter=numBombs
+let page = window.location.pathname
+page = page.substring(page.lastIndexOf('/')+1)
+if(page === 'index.html') {
+	document.querySelector('.beginner').onclick = function() {
+		localStorage.setItem('level','b')
+		window.location.href='./play.html'
+	}
+	document.querySelector('.intermediate').onclick = function() {
+		localStorage.setItem('level','i')
+		window.location.href='./play.html'
+	}
+	document.querySelector('.expert').onclick = function() {
+		localStorage.setItem('level','e')
+		window.location.href='./play.html'
 	}
 
-	addBombCounter() {
-		this.bombCounter++
-	}
-
-	subBombCounter() {
-		this.bombCounter--
-	}
-
-	getBombCounter() {
-		return this.bombCounter
-	}
-
-	getWidth() {
-		return this.width
-	}
-
-	getHeight() {
-		return this.height
-	}
-
-	setAllClicked() {
-		this.squares.forEach((el) => {
-			el.forEach((e) => {
-				e.setClicked()
-			})
-		})
-	}
-
-	makeBoard() {
-		this.createSquares()
-		this.makeColumnsRows()
-		this.initializeCounter()
-		this.randomGenerator()
-		this.countBombsAroundSquares()
-	}
-
-	initializeCounter() {
-		document.querySelector('.counter').innerHTML = this.numBombs
-	}
-
-
-	getSquare(id) {
-		let arr = id.split('_')
-		return this.squares[arr[0]][arr[1]]
-	}
-
-	getSquares() {
-		return this.squares
-	}
-
-	//generate random number with width and 
-	randomGenerator() {
-		for(let i=0;i<this.numBombs;i++) {
-			let x = Math.floor(Math.random() * this.width)+1
-			let y = Math.floor(Math.random() * this.height)+1
-			if(!this.squares[x][y].isBomb()) {
-				this.squares[x][y].setBomb()
-			} else {
-				i--
-			}
-		}
-	}
-
-	countBombsAroundSquares() {
-		for(let i=1;i<=this.width;i++) {
-			for(let j=1;j<=this.height;j++) {
-				if(!this.squares[i][j].isBomb()) {
-					for(let l=i-1;l<=i+1;l++) {
-						for(let s=j-1;s<=j+1;s++) {
-							if(this.squares[l][s].isBomb()) {
-								this.squares[i][j].incrementBombsAround()
-							}
-						}
-					} 
-				}
-			}
-		}
-	}
-
-	makeColumnsRows() {
-		document.querySelector('.grid-container').setAttribute('style',`grid-template-columns: repeat(${this.height},20px);
-			grid-template-rows: repeat(${this.width},20px);`)
-	}
-
-	createSquares() {
-		//console.log('herro')
-		for(let i=0;i<=this.width+1;i++) {
-			this.squares.push([])
-			for(let j=0;j<=this.height+1;j++) {
-				let square = new Square(i,j)
-				this.squares[i].push(square)
-				if(!((i===0 || j===0) || (i===this.width+1 || j===this.height+1))) {
-					square.addSquareIntoHTML()
-				}
-			}
-		}
-	}
 }
+let board
+if(page === 'play.html') {
+	if(localStorage.getItem('level') === 'b') {
+		board = new Board(9,9,18)
+	} else if(localStorage.getItem('level') === 'i') {
+		board = new Board(16,16,40)
+	} else if(localStorage.getItem('level') === 'e') {
+		board = new Board(16,30,99)
+	} else {
 
-/*SQUARE CLASS*/
-class Square {
-	constructor(x,y) {
-		this.x=x
-		this.y=y
-		this.numBombsAround=0
-		this.bomb=false
-		this.flag=false
-		this.clicked=false
 	}
-
-	addSquareIntoHTML() {
-		let square = document.createElement('div')
-		square.className = 'square'
-		square.id = `${this.x}_${this.y}`
-		square.innerHTML = "&nbsp;"
-		square.setAttribute('style',`grid-row: ${this.x}; grid-column: ${this.y}`)
-		document.querySelector('.grid-container').appendChild(square)
-	}
-
-	getX() {
-		return this.x
-	}
-
-	getY() {
-		return this.y
-	}
-
-	isBomb() {
-		return this.bomb
-	}
-
-	setBomb() {
-		this.bomb=true
-	}
-
-	isFlagged() {
-		return this.flag
-	}
-
-	setFlag(set) {
-		this.flag=set
-	}
-
-	incrementBombsAround() {
-		this.numBombsAround++
-	}
-
-	getBombsAround() {
-		return this.numBombsAround
-	}
-
-	isClicked() {
-		return this.clicked
-	}
-
-	setClicked() {
-		this.clicked=true
-	}
+	board.makeBoard()
+	boardEventHandler()
+	document.querySelector('.face').addEventListener('click',function() {
+		board.restart()
+		board.makeBoard()
+		boardEventHandler()
+	})
+	// document.querySelector('.face').addEventListener('mousedown',function() {
+	// 	document.querySelector('.face').src = './images/shock.png'
+	// })
 }
-
-let beginnerBoard = new Board(9,9,10)
-let intermediateBoard = new Board(16,16,40)
-let board = new Board(16,30,99)
-board.makeBoard()
-
-// let board
 
 
 function revealNumber(square) {
@@ -273,7 +134,7 @@ function squarePressed() {
 			bomb.innerHTML = ''
 			this.appendChild(bomb)
 			showBombs(this)
-			//make smiley face dead face
+			document.querySelector('.face').src = './images/dead.png'
 		}
 	}
 }
@@ -303,13 +164,15 @@ function rightClicked(e) {
 	}
 }
 
-document.querySelectorAll('.square').forEach((el) => {
-	el.addEventListener('click',squarePressed)
-	el.addEventListener('contextmenu',rightClicked)
-})
-
-// 	console.log(board.squares[i][30].bomb)
-// 	for(let j=0;j<=30+1;j++) {
-// 			console.log(board.squares[1][j].bomb)
-// 	}
-
+function boardEventHandler() {
+	document.querySelectorAll('.square').forEach((el) => {
+		el.addEventListener('click',squarePressed)
+		el.addEventListener('contextmenu',rightClicked)
+		el.addEventListener('mousedown',function() {
+			document.querySelector('.face').src = './images/shock.png'
+		})
+		el.addEventListener('mouseup',function() {
+			document.querySelector('.face').src = './images/smile.png'
+		})
+	})
+}

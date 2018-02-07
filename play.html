@@ -8,9 +8,14 @@
 	</head>
 	<body>
 		<h1>Minesweeper</h1>
-		<div class='counter'></div>
-		<div class='grid-container'>
+		<span id='info'>
+			<img src='./images/smile.png' class='face'>
+			<div class='counter'></div>
+		</span>
+		<div class='grid-container' oncontextmenu="return false;">
 		</div>
+		<script src="square.js" charset="utf-8"></script>
+		<script src="board.js" charset="utf-8"></script>
 		<script src="app.js" charset="utf-8"></script>
 	</body>
 </html>

@@ -1,19 +1,23 @@
 body {
+	background-image: url('http://cdn.wonderfulengineering.com/wp-content/uploads/2014/10/simple-wallpaper-1.jpg');
 	text-align: center;
 }
 
 h1 {
 	font-size: 50px;
+	font-family: 'Acme', sans-serif;
 }
 
-input {
+h2 {
+	font-family: 'Acme', sans-serif;
+}
+
+.option {
+	display: block;
+	font-family: 'Acme', sans-serif;
 	font-size: 20px;
-	border-style: solid;
 	width: 200px;
 	height: 50px;
 	margin-top: 50px;
-}
-
-#selection {
-	display: block;
+	margin: 50px auto;
 }

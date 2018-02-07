@@ -9,12 +9,13 @@
 		<h1>Minesweeper</h1>
 		<h2>Choose a level:</h2>
 		<div id="selection">
-			<input type='button' id='beginner' value="Beginner" onClick="window.location.href='./play.html'">
-			<input type='button' id='intermediate' value="Intermediate" onClick="window.location.href='./play.html'">
-			<input type='button' id='expert' value="Expert" onClick="window.location.href='./play.html'">
-			<input type='button' id='custom' value="Custom" onClick="window.location.href='./play.html'">
+			<input type='button' class='option beginner' value="Beginner">
+			<input type='button' class='option intermediate' value="Intermediate" onClick="window.location.href='./play.html'">
+			<input type='button' class='option expert' value="Expert" onClick="window.location.href='./play.html'">
+			<input type='button' class='option custom' value="Custom" onClick="window.location.href='./play.html'">
 		</div>	
+		<script src="square.js" charset="utf-8"></script>
+		<script src="board.js" charset="utf-8"></script>
 		<script src="app.js" charset="utf-8"></script>
-	
 	</body>
 </html>
