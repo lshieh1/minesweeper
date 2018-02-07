@@ -1,6 +1,4 @@
-/*SOURCES
-https://stackoverflow.com/questions/19106911/recursive-minesweeper-0-fill
-*/
+
 
 /*BOARD CLASS*/
 class Board {
@@ -32,13 +30,20 @@ class Board {
 		return this.height
 	}
 
+	setAllClicked() {
+		this.squares.forEach((el) => {
+			el.forEach((e) => {
+				e.setClicked()
+			})
+		})
+	}
+
 	makeBoard() {
 		this.createSquares()
 		this.makeColumnsRows()
 		this.initializeCounter()
 		this.randomGenerator()
 		this.countBombsAroundSquares()
-		//this.eventHandlers()
 	}
 
 	initializeCounter() {
@@ -214,7 +219,7 @@ function revealNumber(square) {
 		squ.setClicked()
 		for(let i=squ.getX()-1;i<=squ.getX()+1;i++) {
 			for(let j=squ.getY()-1;j<=squ.getY()+1;j++) {
-				if(!(i===0 || j===0 || i===board.getWidth()+1 || j===board.getHeight()+1) && !(board.getSquare(`${i}_${j}`).isClicked())) {
+				if(!(i===0 || j===0 || i===board.getWidth()+1 || j===board.getHeight()+1) && !(board.getSquare(`${i}_${j}`).isClicked()) && !board.getSquare(`${i}_${j}`).isFlagged()) {
 					let sq = document.getElementById(`${i}_${j}`)
 					if(board.getSquare(`${i}_${j}`).getBombsAround() === 0) {
 						revealNumber(sq)
@@ -227,35 +232,55 @@ function revealNumber(square) {
 	}
 }
 
-function showBombs() {
+function showBombs(t) {
+	board.setAllClicked()
 	board.getSquares().forEach((el) => {
 		el.forEach((e) => {
-			e.setClicked()
-			if(e.isBomb() && !e.isFlagged()) {
+			if(e.isBomb() && !e.isFlagged() && t.id !== `${e.getX()}_${e.getY()}`) {
 				let bomb = document.getElementById(`${e.getX()}_${e.getY()}`)
-				bomb.setAttribute('style','background: red')
-				//debugger
+				let bombImg = document.createElement('img')
+				bombImg.src = './images/bomb.png'
+				bombImg.className = 'bomb'
+				let parent = bomb.parentNode
+				parent.replaceChild(bombImg,bomb)
+			} else if(e.isFlagged() && !e.isBomb()) {
+				let square = document.getElementById(`${e.getX()}_${e.getY()}`)
+				let flag = square.querySelector('.flag')
+				square.removeChild(flag)
+				let bomb = document.createElement('img')
+				let x = document.createElement('img')
+				bomb.src = './images/bomb.png'
+				bomb.className = 'bomb flagged'
+				x.src = './images/x.png'
+				x.className = 'x'
+				square.appendChild(bomb)
+				square.appendChild(x)
 			}
 		})
 	})
 }
-
 function squarePressed() {
 	if(!board.getSquare(this.id).isFlagged()) {
 		//board.getSquare(this.id).setClicked()
-		if(!board.getSquare(this.id).isBomb()) {
+		if(!board.getSquare(this.id).isBomb() && !board.getSquare(this.id).isClicked()) {
 			revealNumber(this)
 			//board.getSquare(this.id).setLeftClicked()
-		} else {
-			showBombs()
+		} else if(!board.getSquare(this.id).isClicked()){
+			this.setAttribute('style','background: red')
+			let bomb = document.createElement('img')
+			bomb.src = './images/bomb.png'
+			bomb.className = 'bomb red'
+			bomb.innerHTML = ''
+			this.appendChild(bomb)
+			showBombs(this)
 			//make smiley face dead face
 		}
 	}
 }
 
 function rightClicked(e) {
-	console.log('herro')
-	e.preventDefault();
+	e.preventDefault()
+	//console.log(board.getSquare(this.id))
 	if(!board.getSquare(this.id).isFlagged()) {
 		if(board.getSquare(this.id).isClicked()) {
 			return
@@ -263,53 +288,25 @@ function rightClicked(e) {
 		let flag = document.createElement('img')
 		flag.src = './images/flag.png'
 		flag.className = 'flag'
-		let parent = this.parentNode
-		parent.replaceChild(flag,this)
+		this.innerHTML = ''
+		this.appendChild(flag)
 		board.getSquare(this.id).setFlag(true)
 		board.subBombCounter()
 		document.querySelector('.counter').innerHTML = board.getBombCounter()
 	} else {
-		let flag = document.querySelector('#flag')
-		e.preventDefault();
-		parent = flag.parentNode
-		parent.replaceChild(val,flag)
-		//this.removeChild(this.querySelector('#flag'))
-		board.getSquare(val.id).setFlag(false)
+		let flag = this.querySelector('.flag')
+		this.removeChild(flag)
+		this.innerHTML = "&nbsp;"
+		board.getSquare(this.id).setFlag(false)
 		board.addBombCounter()
 		document.querySelector('.counter').innerHTML = board.getBombCounter()
 	}
 }
 
-// let board
-// document.querySelector('#beginner').addEventListener('click',function() {
-
-// })
-
-
-// document.querySelectorAll('input').forEach((el) => {
-// 	el.addEventListener('submit',function() {
-// 		console.log('herro')
-// 		if(el.value === 'Beginner') {
-// 			console.log('herro')
-// 			board = new Board(9,9,10)
-// 		} else if(el.value === 'Intermediate') {
-// 			board = new Board(16,16,40)
-// 		} else if(el.value === 'Expert') {
-// 			board = new Board(16,30,99)
-// 		} else {
-			
-// 		}
-// 		board.makeBoard()
-// 	})
-// })
-
 document.querySelectorAll('.square').forEach((el) => {
-	let val
-	//console.log('hello')
 	el.addEventListener('click',squarePressed)
 	el.addEventListener('contextmenu',rightClicked)
 })
-
 
 // 	console.log(board.squares[i][30].bomb)
 // 	for(let j=0;j<=30+1;j++) {

@@ -8,10 +8,42 @@ h1 {
 }
 
 .flag {
-	background-color: green;
 	border: 2px solid;
 	width: 16px;
 	height: 16px;
+	position: relative;
+	right: 2px;
+	bottom: 2px;
+
+}
+
+.bomb {
+	background-color: white;
+	border: 2px solid;
+	width: 16px;
+	height: 16px;
+}
+
+.x {
+	border: 2px solid;
+	width: 16px;
+	height: 16px;
+	position: relative;
+	bottom: 26px;
+	right: 2px;
+}
+
+.flagged {
+	position: relative;
+	bottom: 2px;
+	right: 2px;
+}
+
+.red {
+	background-color: red;
+	position: relative;
+	bottom: 18px;
+	right: 2px;
 }
 
 .section {
@@ -27,7 +59,7 @@ h1 {
 }
 
 .square {
-	background: green;
+	background: #264d73;
 	border: 2px solid;
 	font-size: 12px;
 	font-family: 'Acme', sans-serif;
