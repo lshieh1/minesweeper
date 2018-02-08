@@ -1,6 +1,6 @@
 let page = window.location.pathname
 page = page.substring(page.lastIndexOf('/')+1)
-if(page === 'index.html') {
+if(page === 'index.html' || page === '') {
 	document.querySelector('.beginner').onclick = function() {
 		localStorage.setItem('level','b')
 		window.location.href='./play.html'
