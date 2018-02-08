@@ -1,6 +1,6 @@
 let page = window.location.pathname
 page = page.substring(page.lastIndexOf('/')+1)
-if(page === 'index.html') {
+if(page === 'index.html' || page === '') {
 	document.querySelector('.beginner').onclick = function() {
 		localStorage.setItem('level','b')
 		window.location.href='./play.html'
@@ -135,8 +135,9 @@ function squarePressed() {
 			revealNumber(this)
 			if(board.checkWin()) {
 				document.querySelector('.face').src = './images/sunglasses.png'
-				debugger
 				board.showFlags()
+				board.setBombCounterZero()
+				document.querySelector('.counter').innerHTML = board.getBombCounter()
 			}
 		} else if(!board.getSquare(this.id).isClicked()){
 			this.setAttribute('style','background: red')
