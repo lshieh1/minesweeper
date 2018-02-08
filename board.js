@@ -17,6 +17,37 @@ class Board {
 		}
 	}
 
+	checkWin() {
+		let list = []
+		for(let i=1;i<=this.width;i++) {
+			for(let j=1;j<=this.height;j++) {
+				if(!this.squares[i][j].isBomb()) {
+					list.push(this.squares[i][j])
+				}
+			}
+		}
+		let val = true
+		list.forEach((s) => {
+			if(!s.isClicked()) {
+				val = false
+			}
+		})
+		return val
+	}
+
+	showFlags() {
+		this.squares.forEach((el) => {
+			el.forEach((e) => {
+				if(e.isBomb() && !e.isFlagged()) {
+					let flag = document.createElement('img')
+					flag.src = './images/flag.png'
+					flag.className = 'flag won'
+					document.getElementById(`${e.getX()}_${e.getY()}`).appendChild(flag)
+				}
+			})
+		})
+	}
+
 	addBombCounter() {
 		this.bombCounter++
 	}
@@ -115,5 +146,4 @@ class Board {
 		}
 	}
 }
-//module.exports = Board
 

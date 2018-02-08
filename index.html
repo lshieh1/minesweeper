@@ -9,10 +9,24 @@
 		<h1>Minesweeper</h1>
 		<h2>Choose a level:</h2>
 		<div id="selection">
-			<input type='button' class='option beginner' value="Beginner">
-			<input type='button' class='option intermediate' value="Intermediate" onClick="window.location.href='./play.html'">
-			<input type='button' class='option expert' value="Expert" onClick="window.location.href='./play.html'">
-			<input type='button' class='option custom' value="Custom" onClick="window.location.href='./play.html'">
+			<div class=options>
+				<input type='button' class='option beginner' value="Beginner">
+				<p class='beginner'>Height: 9	Width: 9	Mines: 10</p>
+			</div>
+			<div class=options>
+				<input type='button' class='option intermediate' value="Intermediate">
+				<p class='beginner'>Height: 16	Width: 16	Mines: 40</p>
+			</div>
+			<div class=options>
+				<input type='button' class='option expert' value="Expert">
+				<p class='beginner'>Height: 16	Width: 30	Mines: 99</p>
+			</div>
+			<div class=options>
+				<input type='button' class='option custom' value="Custom">
+				<input type='text' class='custom height' placeholder='Height'>
+				<input type='text' class='custom width' placeholder='Width'>
+				<input type='text' class='custom mines' placeholder='Mines'>
+			</div>
 		</div>	
 		<script src="square.js" charset="utf-8"></script>
 		<script src="board.js" charset="utf-8"></script>

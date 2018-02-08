@@ -13,18 +13,28 @@ if(page === 'index.html') {
 		localStorage.setItem('level','e')
 		window.location.href='./play.html'
 	}
-
+	document.querySelector('.custom').onclick = function() {
+		localStorage.setItem('level','c')
+		localStorage.setItem('height',document.querySelector('.height').value)
+		localStorage.setItem('width',document.querySelector('.width').value)
+		localStorage.setItem('mines',document.querySelector('.mines').value)
+		window.location.href='./play.html'
+	}
 }
+
 let board
 if(page === 'play.html') {
 	if(localStorage.getItem('level') === 'b') {
-		board = new Board(9,9,18)
+		board = new Board(9,9,10)
 	} else if(localStorage.getItem('level') === 'i') {
 		board = new Board(16,16,40)
 	} else if(localStorage.getItem('level') === 'e') {
 		board = new Board(16,30,99)
-	} else {
-
+	} else if(localStorage.getItem('level') === 'c') {
+		let height = parseInt(localStorage.getItem('height'))
+		let width = parseInt(localStorage.getItem('width'))
+		let mines = parseInt(localStorage.getItem('mines'))
+		board = new Board(height,width,mines)
 	}
 	board.makeBoard()
 	boardEventHandler()
@@ -33,14 +43,11 @@ if(page === 'play.html') {
 		board.makeBoard()
 		boardEventHandler()
 	})
-	// document.querySelector('.face').addEventListener('mousedown',function() {
-	// 	document.querySelector('.face').src = './images/shock.png'
-	// })
 }
-
 
 function revealNumber(square) {
 	let val = board.getSquare(square.id).getBombsAround()
+	board.getSquare(square.id).setClicked()
 	if(val === 1) {
 		square.setAttribute('style','background: white; color: blue')
 		square.innerHTML = 1
@@ -121,11 +128,16 @@ function showBombs(t) {
 	})
 }
 function squarePressed() {
+	//debugger
 	if(!board.getSquare(this.id).isFlagged()) {
 		//board.getSquare(this.id).setClicked()
 		if(!board.getSquare(this.id).isBomb() && !board.getSquare(this.id).isClicked()) {
 			revealNumber(this)
-			//board.getSquare(this.id).setLeftClicked()
+			if(board.checkWin()) {
+				document.querySelector('.face').src = './images/sunglasses.png'
+				debugger
+				board.showFlags()
+			}
 		} else if(!board.getSquare(this.id).isClicked()){
 			this.setAttribute('style','background: red')
 			let bomb = document.createElement('img')

@@ -57,4 +57,3 @@ class Square {
 		this.clicked=true
 	}
 }
-//module.exports = Square

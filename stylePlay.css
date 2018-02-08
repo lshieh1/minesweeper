@@ -55,7 +55,8 @@ h1 {
 	grid-gap: 1px;
 	grid-template-rows: minmax(20px);
 	justify-content: center;
-	padding-top: 50px;	
+	padding-top: 50px;
+		
 }
 
 .square {
@@ -78,6 +79,13 @@ h1 {
 	height: 50px;
 }
 
-#info {
-	
+.won {
+	position: relative;
+	bottom: 17px;
+}
+
+.back {
+	position: relative;
+	left: 100px;
+	bottom: 50px;
 }
