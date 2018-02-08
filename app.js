@@ -135,8 +135,9 @@ function squarePressed() {
 			revealNumber(this)
 			if(board.checkWin()) {
 				document.querySelector('.face').src = './images/sunglasses.png'
-				debugger
 				board.showFlags()
+				board.setBombCounterZero()
+				document.querySelector('.counter').innerHTML = board.getBombCounter()
 			}
 		} else if(!board.getSquare(this.id).isClicked()){
 			this.setAttribute('style','background: red')

@@ -56,6 +56,10 @@ class Board {
 		this.bombCounter--
 	}
 
+	setBombCounterZero() {
+		this.bombCounter = 0
+	}
+
 	getBombCounter() {
 		return this.bombCounter
 	}
