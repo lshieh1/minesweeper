@@ -24,6 +24,12 @@ writing all the eventhandlers (for the many kinds of buttons)
 
 the algorithms for clearing buttons that are 0, and calculating how many bombs around each square
 
+## Technologies Used
+-JavaScript
+-HTML/CSS
+
+## Unsolved Problems
+-When you click anywhere on the board after dying or winning, it goes back to a smiley face.
 
 ## Links and Resources  (Anything you've looked up so far or are thinking about using.)
 http://minesweeperonline.com/
